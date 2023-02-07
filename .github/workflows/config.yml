@@ -9,7 +9,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Install clang-format
-      run: sudo apt-get update && sudo apt-get install -y clang-format
+      run: sudo apt update && sudo apt install -y clang-format
 
     - name: Run clang-format
       run: |
@@ -36,6 +36,10 @@ jobs:
       run: cd build && cmake ..
     - name: Build
       run: cd build && make -j4
+    - name: "Build folder compressed for upload"
+      run: tar -cvf build.tar build
+    - name: "Build directory uploaded as artifact"
+      uses: actions/upload-artifact@v3
 
   test:
     runs-on: ubuntu-latest
@@ -51,8 +55,12 @@ jobs:
         sudo apt install -y libeigen3-dev
         sudo apt install -y libyaml-cpp-dev
         sudo apt install -y libboost-all-dev
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build
+    - name: "extract Build folder"
+      run: tar -xvf build.tar
     - name: "run tests"
       run: |
-          cd tests
-          cp ../build/testsidemade .
-          ./testsidemade
+          cd build && make test
