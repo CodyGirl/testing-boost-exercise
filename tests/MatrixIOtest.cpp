@@ -8,16 +8,18 @@ using namespace Eigen;
 struct matrixIOFixture {
   matrixIOFixture()
   {
-    A         = MatrixXd(3, 3);
+    A = MatrixXd(3, 3);
     expectedA = MatrixXd(3, 3);
-    expectedA << 0.680375, 0.59688, -0.329554, -0.211234, 0.823295, 0.536459, 0.566198, -0.604897, -0.444451;
+    expectedA << 0.680375, 0.59688, -0.329554,
+    -0.211234, 0.823295, 0.536459,
+    0.566198, -0.604897, -0.444451;
   }
 
   MatrixXd expectedA;
   MatrixXd A;
 };
 
-BOOST_FIXTURE_TEST_SUITE(matrixIOTests, matrixIOFixture)
+BOOST_FIXTURE_TEST_SUITE(MatrixIOTests, matrixIOFixture)
 
 using namespace matrixIO;
 
